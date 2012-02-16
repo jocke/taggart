@@ -39,6 +39,9 @@
 #                                      "/pages/about_us.html".href
 # 
 # History
+#  - Pushed code to Git.
+#  - Created test Gem.
+#  - Added files to create Gem and reorganised the file structure.
 #  - Made dual_sub pass all the tests, and added the examples from .tr (translate) Ruby docs to the test.
 #  - More work on the "dynamic namespace clash resolver", in other words, tr and sub work in both classic and Taggart way.
 #  - Initial version of "dynamic namespace clash resolver" to fix issues with .tr
@@ -53,7 +56,7 @@
 # 
 #    Author: Jocke Selin <jocke@selincite.com>
 #      Date: 2012-02-16
-#   Version: 0.0.1-006
+#   Version: 0.0.2 Build 007
 #
  
 module Taggart

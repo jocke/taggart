@@ -8,9 +8,8 @@ Gem::Specification.new do |s|
   s.email       = ["jocke@selincite.com"]
   # s.homepage    = "http://github.com/jocke/taggart/"
   s.require_paths = ["lib"]
-  s.files       = ["lib/taggart.rb", "Rakefile", "taggart.gemspec"]
+  s.files       = ["lib/taggart.rb", "Rakefile", "taggart.gemspec", "README"]
   s.test_files  = ["spec/taggart_spec.rb"]
-  # s.add_runtime_dependency ""
   s.add_development_dependency "rspec"
   s.post_install_message = "Thanks for showing interest in Taggart! Please provide feedback to jocke@selincite.com!"
 end
