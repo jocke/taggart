@@ -26,17 +26,16 @@ Playtime:
      "Gimme a".br
 
 Issues:
- - "hello"._sub('world', 'world') returns 
+ - "hello".sub('world', 'world') returns 
       "<sub  world  world>hello</sub>"
      Not really perfect
 
 Future??? (with your blessing)
- - Package it into a gem
- - Send to GitHub
  - Extending to other HTML elements. "/images/company_logo.jpg".img (could check file, size, etc.)
                                      "/pages/about_us.html".href
 
 History
+ - Created Gem
  - Pushed code to Git.
  - Created test Gem.
  - Added files to create Gem and reorganised the file structure.
@@ -54,4 +53,5 @@ Feedback welcome!!
 
    Author: Jocke Selin <jocke@selincite.com>
      Date: 2012-02-16
-  Version: 0.0.2 Build 007
+  Version: 0.0.3 Build 008
+   Github: https://github.com/jocke/taggart
