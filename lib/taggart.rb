@@ -56,7 +56,7 @@
 # 
 #    Author: Jocke Selin <jocke@selincite.com>
 #      Date: 2012-02-16
-#   Version: 0.0.2 Build 007
+#   Version: 0.0.1 Build 007
 #
  
 module Taggart

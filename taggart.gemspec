@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "Taggart"
-  s.version     = "0.0.2"
+  s.version     = "0.0.1"
   s.date        = "2012-02-16"
   s.summary     = "Simple HTML tag by String extension."
   s.description = "Tag your strings in a simple and easy way by running \"Hello World\".h1 for example."
