@@ -8,9 +8,7 @@ is, the nicer it is to not have ", #, { or } soiling the code.
 
 Playtime:
   Install the gem:
-    gem install ./Taggart-0.0.1.gem
-  or 
-    gem install taggart       (Not possible yet!)
+    gem install taggart
   Then load Taggart with:
     require 'taggart'
   Taggart is now active, which means you can play around.
@@ -56,4 +54,4 @@ Feedback welcome!!
 
    Author: Jocke Selin <jocke@selincite.com>
      Date: 2012-02-16
-  Version: 0.0.1 Build 007
+  Version: 0.0.2 Build 007
