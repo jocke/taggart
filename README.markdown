@@ -71,7 +71,7 @@ will produce this HTML (author's line breaks and indentation)
   </table>
 ```
 
-. Naturally we can do single tags too.
+Naturally we can do single tags too.
 
 ```ruby
   "Gimme a".br
@@ -80,7 +80,7 @@ will produce this HTML (author's line breaks and indentation)
 will return.
 
 ```html
-  Gimme a<br />"
+  Gimme a<br />
 ```
 
 See the `spec/taggart_spec.rb` for more examples (until I have time to do a bigger-better-faster-example file).
@@ -98,7 +98,7 @@ write `my_variable.strong` to get the job done. **Taggart** was born.
 The Idea
 --------
 The idea was to simplify the code and make it easier and faster for me to add arbitrary HTML into my
-non-HTML code. I wanted to stop breaking my fingers trying to get the quote-string-hash-curlybrackets-code-curlybrackets-morestrings-quote
+non-HTML code. I wanted to stop breaking my fingers trying to get the _quote-string-hash-curlybrackets-code-curlybrackets-morestrings-quote_
 right on my keyboard.
 It was _never_ intended to be a full-fledged HTML page renderer. If you want to use it for that, I'd love to see the result, though.
 
@@ -112,6 +112,7 @@ Install the gem:
 ```
   
 Then load Taggart with:
+
 ```
   require 'taggart'
 ```
@@ -127,7 +128,7 @@ History
 - Pushed code to Git.
 - Created test Gem.
 - Added files to create Gem and reorganised the file structure.
-- Made dual_sub() pass all the tests, and added the examples from `.tr` (translate) Ruby docs to the test.
+- Made `dual_sub()` pass all the tests, and added the examples from `.tr` (translate) Ruby docs to the test.
 - More work on the "dynamic namespace clash resolver", in other words, `.tr` and sub work in both classic and Taggart way.
 - Initial version of "dynamic namespace clash resolver" to fix issues with `.tr`.
 - Added basic RSpec test.
@@ -143,13 +144,14 @@ Future???
 With your blessing. Like Ozzy said; _"The crazier you get, the crazier Ozzy gets!"_, or something.
 
 * Potential validations, could check file, size, etc
+* Switch between HTML and XHTML.
 * Full fledged examples.
 * Please send suggestions.
 
 
 Issues:
 -------
-- `"hello".sub('world', 'world')` returns `<sub  world  world>hello</sub>` Not really perfect
+- `"hello".sub('world', 'world')` returns `<sub  world  world>hello</sub>`. Not really perfect.
 - Please help me test it out.
 
 
