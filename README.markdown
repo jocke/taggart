@@ -5,40 +5,57 @@ How and what
 ```ruby
         "Hello World!".h1
 ```
+
 returns
+
 ```
         <h1>Hello World!</h1>
 ```
+
 or try (in bad typographical taste) 
+
 ```ruby
         "Important!".em.strong
 ```
+
 to get 
+
 ```html
         <em><strong>Important!</em></strong>
 ```
+
 or do some more nesting 
+
 ```ruby
         ("Label".td + "Value".td).tr.table
 ```
+
 to render a small table
+
 ```html
         <table><tr><td>Label</td><td>Value</td></tr></table>
 ```
-. Add HTML attributes as Ruby parameters.
+
+Add HTML attributes as Ruby parameters.
 
 ```ruby
         "hello".span(class: 'stuff', id: 'thing')
 ```
+
 to get a nice HTML string like this
+
 ```html
         <span class=\"stuff\" id=\"thing\">hello</span>
 ```
-. You can also use arrays, how about this table?
+
+You can also use arrays, how about this table?
+
 ```ruby
         (%w(r1c1 r1c2 r1c3).td.tr + %w(r2c1 r2c2 r2c3).td.tr).table
 ```
+
 will produce this HTML (author's line breaks and indentation)
+
 ```html
         <table>
           <tr>
@@ -53,11 +70,15 @@ will produce this HTML (author's line breaks and indentation)
           </tr>
         </table>
 ```
+
 . Naturally we can do single tags too.
+
 ```ruby
         "Gimme a".br
 ```
+
 will return.
+
 ```html
         "Gimme a<br />" 
 ```
