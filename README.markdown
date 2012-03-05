@@ -1,12 +1,12 @@
-Taggart is a tiny library that allows you to tag Strings with HTML
-==================================================================
+Taggart allows you to tag Strings with HTML
+===========================================
 How and what
 ------------
 ```ruby
         "Hello World!".h1
 ```
 returns
-```html
+```
         <h1>Hello World!</h1>
 ```
 or try (in bad typographical taste) 
