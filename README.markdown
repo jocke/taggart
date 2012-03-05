@@ -8,7 +8,7 @@ How and what
 
 returns
 
-```
+```html
         <h1>Hello World!</h1>
 ```
 
@@ -45,7 +45,7 @@ Add HTML attributes as Ruby parameters.
 to get a nice HTML string like this
 
 ```html
-        <span class=\"stuff\" id=\"thing\">hello</span>
+        <span class="stuff" id="thing">hello</span>
 ```
 
 You can also use arrays, how about this table?
@@ -80,7 +80,7 @@ will produce this HTML (author's line breaks and indentation)
 will return.
 
 ```html
-        "Gimme a<br />" 
+        Gimme a<br />"
 ```
 
 See the `spec/taggart_spec.rb` for more examples (until I have time to do a bigger-better-faster-example file).
@@ -106,9 +106,15 @@ It was _never_ intended to be a full-fledged HTML page renderer. If you want to 
 Installation:
 -------------
 Install the gem:
-  ```gem install taggart```
+```
+  gem install taggart
+```
+  
 Then load Taggart with:
-  ```require 'taggart'```
+```
+  require 'taggart'
+```
+
 Taggart is now active, which means you can play around.
 
 
