@@ -31,10 +31,10 @@
 #      Not really perfect
 # 
 # Future??? (with your blessing)
-#  - Extending to other HTML elements. "/images/company_logo.jpg".img (could check file, size, etc.)
-#                                      "/pages/about_us.html".href
+# - Potential validations - could check file, size, etc
 # 
 # History
+#  - Added href and img feature.
 #  - Created Gem
 #  - Pushed code to Git.
 #  - Created test Gem.
@@ -52,8 +52,8 @@
 # Feedback welcome!!
 # 
 #    Author: Jocke Selin <jocke@selincite.com>
-#      Date: 2012-02-16
-#   Version: 0.0.3 Build 008
+#      Date: 2012-03-05
+#   Version: 0.0.4 Build 009
 #    Github: https://github.com/jocke/taggart
  
 module Taggart
