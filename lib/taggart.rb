@@ -92,11 +92,17 @@ module Taggart
       end
     end
     
-    
+        
     def href(label = nil, *args)
       option_str = parse_options(args << {href: self})
       label ||= self
       "<a#{option_str}>#{label}</a>"
+    end
+    
+    
+    def img(*args)
+      option_str = parse_options(args << {src: self})
+      "<img#{option_str} />"
     end
     
   
@@ -145,7 +151,7 @@ module Taggart
     end
   
   
-    standard_tags   = %w{ h1 h2 h3 h4 h5 h6 strong p em title table thead tbody th td tfoot div span abbr acronym address dd dl dt li ol ul tt pre sup }
+    standard_tags   = %w{ h1 h2 h3 h4 h5 h6 strong p a em title table thead tbody th td tfoot div span abbr acronym address dd dl dt li ol ul tt pre sup }
     special_tags    = [['tr', '_tr'], ['sub', '_sub']]
     tags = standard_tags + special_tags
     puts "Tag definitions: #{tags.inspect}" if DEBUG

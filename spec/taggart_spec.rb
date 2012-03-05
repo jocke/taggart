@@ -137,6 +137,7 @@ describe Taggart::Array, "#array_attribute_tag" do
     end
   end
   
+  
   describe Taggart::String, "Special tags" do
     context "href tags" do
       it "renders a basic <a href>-tag." do 
@@ -157,6 +158,26 @@ describe Taggart::Array, "#array_attribute_tag" do
       
       it "renders a <a href>-tag with two attributes." do 
         "/hello/world.html".href("Hello World", {class: :linky, title: 'Clicky the linky!'}).should == "<a class=\"linky\" title=\"Clicky the linky!\" href=\"/hello/world.html\">Hello World</a>"
+      end
+    end
+    
+    context "img tags" do 
+      it "renders a basic <img>-tag." do
+        "/path/to/img.png".img.should == "<img src=\"/path/to/img.png\" />"
+      end
+      
+      it "renders a <img>-tag with an attribute." do
+        "/path/to/img.png".img({class: :thumbnail}).should == "<img class=\"thumbnail\" src=\"/path/to/img.png\" />"
+      end
+      
+      it "renders a <img>-tag with two attributes." do
+        "/path/to/img.png".img({class: :slideshow, alt: :'Rainbows and fluffy animals'}).should == "<img class=\"slideshow\" alt=\"Rainbows and fluffy animals\" src=\"/path/to/img.png\" />"
+      end
+    end
+    
+    context "combinations" do
+      it "renders a clickable image" do
+        "/path/to/img.png".img({class: :thumbnail}).a(href: '/hello/world.html').should == "<a href=\"/hello/world.html\"><img class=\"thumbnail\" src=\"/path/to/img.png\" /></a>"
       end
     end
   end
