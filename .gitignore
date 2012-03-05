@@ -1,3 +1,5 @@
 .DS_Store
 *.tmproj
 taggart_notes.txt
+render_markdown.rb
+README.html
