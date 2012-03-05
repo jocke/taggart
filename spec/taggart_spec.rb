@@ -136,4 +136,28 @@ describe Taggart::Array, "#array_attribute_tag" do
       %w(First Second Third Fourth Fifth Sizt Seventh).li.ol.should == "<ol><li>First</li><li>Second</li><li>Third</li><li>Fourth</li><li>Fifth</li><li>Sizt</li><li>Seventh</li></ol>" 
     end
   end
+  
+  describe Taggart::String, "Special tags" do
+    context "href tags" do
+      it "renders a basic <a href>-tag." do 
+        "/hello/world.html".href("Hello World").should == "<a href=\"/hello/world.html\">Hello World</a>"
+      end
+      
+      it "renders a basic <a href>-tag without an explicit label." do 
+        "/hello/world.html".href.should == "<a href=\"/hello/world.html\">/hello/world.html</a>"
+      end
+      
+      it "renders a <a href>-tag with an attribute." do 
+        "/hello/world.html".href("Hello World", {class: :linky}).should == "<a class=\"linky\" href=\"/hello/world.html\">Hello World</a>"
+      end
+      
+      it "renders a <a href>-tag with an attribute, but without an explicit label." do 
+        "/hello/world.html".href(nil, {class: :linky}).should == "<a class=\"linky\" href=\"/hello/world.html\">/hello/world.html</a>"
+      end
+      
+      it "renders a <a href>-tag with two attributes." do 
+        "/hello/world.html".href("Hello World", {class: :linky, title: 'Clicky the linky!'}).should == "<a class=\"linky\" title=\"Clicky the linky!\" href=\"/hello/world.html\">Hello World</a>"
+      end
+    end
+  end
 end

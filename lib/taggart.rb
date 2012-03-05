@@ -92,6 +92,13 @@ module Taggart
       end
     end
     
+    
+    def href(label = nil, *args)
+      option_str = parse_options(args << {href: self})
+      label ||= self
+      "<a#{option_str}>#{label}</a>"
+    end
+    
   
     private 
   
