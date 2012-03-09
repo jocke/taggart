@@ -99,13 +99,13 @@ gives you
 whereas this string
 
 ```ruby
-  "/script/awesomes_script.js".script
+  "/script/awesome_script.js".script
 ```
 
 gives you this
 
 ```html
-  "<script type="text/javascript" src="/script/awesomes_script.js"></script>"
+  "<script type="text/javascript" src="/script/awesome_script.js"></script>"
 ```
 
 Naturally this also works with attributes.
@@ -150,7 +150,7 @@ Taggart is now active, which means you can play around.
 History
 -------
 
-- Added <script>-tag. You can now add ``"my-script.js".script`` and ``"alert('Hello World!')".script`.
+- Added `<script>`-tag. You can now add `"my-script.js".script` and `"alert('Hello World!')".script`.
 - Added several tags (still not a complete list, tweet or send a pull request for more tags.)
 - Removed several 'if DEBUG' lines
 - Removed examples and most comments from taggart.rb file
