@@ -175,6 +175,20 @@ describe Taggart::Array, "#array_attribute_tag" do
       end
     end
     
+    context "script tags" do
+      it "should render a script tag with src-attribute when the string ends in .js" do
+        "/jabbarscript/waste_cpu_cycles.js".script.should == "<script type=\"text/javascript\" src=\"/jabbarscript/waste_cpu_cycles.js\"></script>"
+      end
+      
+      it "should render a script tag with src-attribute and an id-attribute  when the string ends in .js" do
+        "/jabbarscript/fancy_pants.js".script(id: 'fancy_fancy').should == "<script id=\"fancy_fancy\" type=\"text/javascript\" src=\"/jabbarscript/fancy_pants.js\"></script>"
+      end
+      
+      it "should render a script tag with when the string does not ends in .js" do
+        "document.write(\"Hello World!\");".script(id: 'pants_pants').should == "<script id=\"pants_pants\" type=\"text/javascript\">document.write(\"Hello World!\");</script>"
+      end
+    end
+    
     context "combinations" do
       it "renders a clickable image" do
         "/path/to/img.png".img({class: :thumbnail}).a(href: '/hello/world.html').should == "<a href=\"/hello/world.html\"><img class=\"thumbnail\" src=\"/path/to/img.png\" /></a>"

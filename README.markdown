@@ -83,6 +83,31 @@ will return.
   Gimme a<br />
 ```
 
+Also try some of the 'cleverness', for example calling `.script` on a `.js` file will yield a different result compared to running it on a Javascript. 
+Like this:
+
+```ruby
+  "alert('This string will pop up an alert!')".script
+```
+gives you
+```html
+  <script id="pants_pants" type="text/javascript">alert('This string will pop up an alert!')</script>"
+```
+
+whereas this string
+
+```ruby
+  "/script/awesomes_script.js".script
+```
+
+gives you this
+
+```html
+  "<script type="text/javascript" src="/script/awesomes_script.js"></script>"
+```
+
+Naturally this also works with attributes.
+
 See the `spec/taggart_spec.rb` for more examples (until I have time to do a bigger-better-faster-example file).
 
 Background:
@@ -122,6 +147,10 @@ Taggart is now active, which means you can play around.
 
 History
 -------
+- Added <script>-tag. You can now add ``"my-script.js".script`` and ``"alert('Hello World!')".script`.
+- Added several tags (still not a complete list, tweet or send a pull request for more tags.)
+- Removed several 'if DEBUG' lines
+- Removed examples and most comments from taggart.rb file
 - Converted the README to markdown for a bit better formatting fun.
 - Added `.href` and `.img` feature.
 - Created Gem
@@ -157,10 +186,10 @@ Issues:
 
 Feedback welcome!!
 
-Author: Jocke Selin <jocke@selincite.com>
+Author: Jocke Selin <jocke@selincite.com> @jockeselin
 
-Date: 2012-03-05
+Date: 2012-03-09
 
-Version: 0.0.4 Build 009
+Version: 0.0.5 Build 010
 
 Github: <https://github.com/jocke/taggart>
