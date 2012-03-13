@@ -93,7 +93,7 @@ Like this:
 gives you
 
 ```html
-  <script id="pants_pants" type="text/javascript">alert('This string will pop up an alert!')</script>"
+  <script type="text/javascript">alert('This string will pop up an alert!')</script>
 ```
 
 whereas this string
@@ -105,12 +105,26 @@ whereas this string
 gives you this
 
 ```html
-  "<script type="text/javascript" src="/script/awesome_script.js"></script>"
+  <script type="text/javascript" src="/script/awesome_script.js"></script>
 ```
 
-Naturally this also works with attributes.
+Calling `.ol` or `.ul` on an array, will generate a full ordered or unordered list, like this
+
+```ruby
+  %w(First Second Third).ol
+```
+
+returns
+
+```html
+  <ol><li>First</li><li>Second</li><li>Third</li></ol>
+```
+
+
+Naturally they all also work with attributes.
 
 See the `spec/taggart_spec.rb` for more examples (until I have time to do a bigger-better-faster-example file).
+
 
 Background:
 -----------
@@ -150,9 +164,10 @@ Taggart is now active, which means you can play around.
 History
 -------
 
+- Added `<ol>` and `<ul>` tags to the Array so you can now generate lists in one fast action.
 - Added `<script>`-tag. You can now add `"my-script.js".script` and `"alert('Hello World!')".script`.
 - Added several tags (still not a complete list, tweet or send a pull request for more tags.)
-- Removed several 'if DEBUG' lines
+- Removed several `if DEBUG` lines
 - Removed examples and most comments from taggart.rb file
 - Converted the README to markdown for a bit better formatting fun.
 - Added `.href` and `.img` feature.
@@ -191,8 +206,8 @@ Feedback welcome!!
 
 Author: Jocke Selin <jocke@selincite.com> @jockeselin
 
-Date: 2012-03-09
+Date: 2012-03-13
 
-Version: 0.0.5 Build 010
+Version: 0.0.6 Build 011
 
 Github: <https://github.com/jocke/taggart>

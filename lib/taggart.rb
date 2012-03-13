@@ -159,6 +159,24 @@ module Taggart
     end
     
     
+    def ol(*args)
+      self.li.ol(*args)
+    end
+    
+    
+    def ul(*args)
+      self.li.ul(*args)
+    end
+    
+    
+    def tr(*args)
+      self.td.tr(*args)
+    end
+    
+    # def table(*args)
+    #   puts "Not implemented. Should return a table, with a TR for each nested array, or one TR if there's only one array."
+    # end
+    
   end # End Array module
 end
 

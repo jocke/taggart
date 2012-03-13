@@ -195,4 +195,35 @@ describe Taggart::Array, "#array_attribute_tag" do
       end
     end
   end
+  
+  describe Taggart::Array, "smarter tags" do
+    context "cleverer lists" do
+      it "returns an ordered list when calling ol." do
+        %w{one two three}.ol.should == "<ol><li>one</li><li>two</li><li>three</li></ol>"
+      end
+      
+      it "returns an ordered list with attributes when calling ol." do
+        %w{one two three}.ol(id: :my_unordered_list).should == "<ol id=\"my_unordered_list\"><li>one</li><li>two</li><li>three</li></ol>"
+      end
+      
+      it "returns an unordered list when calling ul." do
+        %w{one two three}.ul.should == "<ul><li>one</li><li>two</li><li>three</li></ul>"
+      end
+      
+      it "returns an unordered list with attributes when calling ol." do
+        %w{one two three}.ul(id: :my_ordered_list).should == "<ul id=\"my_ordered_list\"><li>one</li><li>two</li><li>three</li></ul>"
+      end
+      
+    end
+    context "cleverer tables" do
+      
+      it "returns a table row when calling tr." do
+        %w{one two three}.tr.should == "<tr><td>one</td><td>two</td><td>three</td></tr>"
+      end
+      
+      it "returns an unordered list with attributes when calling ol." do
+        %w{one two three}.tr(id: :my_table_row).should == "<tr id=\"my_table_row\"><td>one</td><td>two</td><td>three</td></tr>"
+      end
+    end
+  end
 end
