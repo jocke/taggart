@@ -164,6 +164,7 @@ Taggart is now active, which means you can play around.
 History
 -------
 
+- Added `<table>` to Array that creates single or multi row tables.
 - Added `<ol>` and `<ul>` tags to the Array so you can now generate lists in one fast action.
 - Added `<script>`-tag. You can now add `"my-script.js".script` and `"alert('Hello World!')".script`.
 - Added several tags (still not a complete list, tweet or send a pull request for more tags.)
@@ -206,7 +207,7 @@ Feedback welcome!!
 
 Author: Jocke Selin <jocke@selincite.com> @jockeselin
 
-Date: 2012-03-13
+Date: 2012-03-14
 
 Version: 0.0.6 Build 011
 

@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "taggart"
-  s.version     = "0.0.5"
-  s.date        = "2012-03-09"
+  s.version     = "0.0.6"
+  s.date        = "2012-03-14"
   s.summary     = "Tag Strings with HTML; 'Hello World'.h1"
   s.description = "Tag your strings in a simple and easy way by running \"Hello World\".h1 for example."
   s.authors     = ["Jocke Selin"]

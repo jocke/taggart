@@ -1,4 +1,5 @@
-# Run with: rspec -fd -c taggart_spec.rb 
+# Run with rake or  with: rspec -fd -c taggart_spec.rb 
+
 require 'taggart.rb'
 
 describe Taggart::String, "#attribute_tags" do
@@ -215,14 +216,30 @@ describe Taggart::Array, "#array_attribute_tag" do
       end
       
     end
+    
     context "cleverer tables" do
-      
       it "returns a table row when calling tr." do
         %w{one two three}.tr.should == "<tr><td>one</td><td>two</td><td>three</td></tr>"
       end
       
-      it "returns an unordered list with attributes when calling ol." do
+      it "returns a table row witth attributes when calling tr." do
         %w{one two three}.tr(id: :my_table_row).should == "<tr id=\"my_table_row\"><td>one</td><td>two</td><td>three</td></tr>"
+      end
+      
+      it "returns a single row table when calling table with strings." do
+        %w{one two three}.table.should == "<table><tr><td>one</td><td>two</td><td>three</td></tr></table>"
+      end
+      
+      it "returns a single row table with attributes when calling table with strings." do
+        %w{one two three}.table(id: :single_row).should == "<table id=\"single_row\"><tr><td>one</td><td>two</td><td>three</td></tr></table>"
+      end
+      
+      it "returns a multi-row table when calling table with multidimensional arrays" do
+        [%w(one two three), %w(zero nine eight)].table.should == "<table><tr><td>one</td><td>two</td><td>three</td></tr><tr><td>zero</td><td>nine</td><td>eight</td></tr></table>"
+      end
+      
+      it "returns a multi-row table with attributes when calling table with multidimensional arrays" do
+        [%w(one two three), %w(zero nine eight)].table(id: :multi_row).should == "<table id=\"multi_row\"><tr><td>one</td><td>two</td><td>three</td></tr><tr><td>zero</td><td>nine</td><td>eight</td></tr></table>"
       end
     end
   end

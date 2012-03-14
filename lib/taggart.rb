@@ -2,8 +2,8 @@
 # ===========================================
 #    Author: Jocke Selin <jocke@selincite.com>
 #            @jockeselin
-#      Date: 2012-03-09
-#   Version: 0.0.5 Build 010
+#      Date: 2012-03-14
+#   Version: 0.0.6 Build 011
 #    Github: https://github.com/jocke/taggart
  
 module Taggart
@@ -173,9 +173,16 @@ module Taggart
       self.td.tr(*args)
     end
     
-    # def table(*args)
-    #   puts "Not implemented. Should return a table, with a TR for each nested array, or one TR if there's only one array."
-    # end
+    
+    def table(*args)
+      if self.first.is_a? Array
+        self.map do |table_row|
+          table_row.tr if table_row.is_a? Array
+        end.join.table(*args)
+      else
+        self.tr.table(*args)
+      end
+    end
     
   end # End Array module
 end
