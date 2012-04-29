@@ -44,7 +44,7 @@ module Taggart
     puts "does some magic behind the scenes to determine wheter you are asking"
     puts "for a Taggart tag or the original method."
     Taggart::String::SPECIAL_TAGS.sort.each do |tag_pair|
-      puts "  Tag: <#{tag_pair[0].ljust(6)}>  Method: .#{tag_pair[1]}"
+      puts "  Tag: #{('<' + tag_pair[0] + '>').ljust(6)}  Method: .#{tag_pair[1]}"
     end
     puts "\nSingle Tags"
     puts "------------"
@@ -59,11 +59,25 @@ module Taggart
     puts "Standard tags  Taggart::String::STANDARD_TAGS   Taggart.standard_tags"
     puts "Special tags   Taggart::String::SPECIAL_TAGS    Taggart.special_tags"
     puts "Single tags    Taggart::String::SINGLE_TAGS     Taggart.single_tags"
+    puts "\nSmart Tags"
+    puts "-----------"
+    puts "These tags go to the gifted class and can speak elvish. They know what"
+    puts "you want from them. They don't behave like the other ones in the sense"
+    puts "that you have a string that you want to turn into something, not just a"
+    puts "simple tag."
+    puts "Here's the pupils of the gifted class:"
+    puts ".img    - Turns a URL to an image into an img tag."
+    puts ".href   - turns a URL into the href-portion of an A-tag, takes the link"
+    puts "          content as a parameter, and also other attributes as 2nd argument."
+    puts ".script - Either turns a URL to a script file into a <script src..></script>"
+    puts "          tag, or embeds a script source in <script></script> tags. Smart!"
   end
+
 
   def self.standard_tags
     Taggart::String::STANDARD_TAGS
   end
+
   def self.special_tags
     Taggart::String::SPECIAL_TAGS
   end
@@ -71,6 +85,7 @@ module Taggart
   def self.single_tags
     Taggart::String::SINGLE_TAGS 
   end
+
 
   private
 

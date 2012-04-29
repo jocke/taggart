@@ -1,6 +1,30 @@
-# Run with rake or  with: rspec -fd -c taggart_spec.rb 
+# Run with rake or with: rspec -fd -c taggart_spec.rb 
 
 require 'taggart.rb'
+
+describe Taggart, "informational" do
+
+  it "should respond to help" do
+    Taggart.should respond_to(:help)
+  end
+
+  it "should respond to tags" do
+    Taggart.should respond_to(:tags)
+  end
+
+  it "returns an array when asked for standard tags" do
+    Taggart.standard_tags.should be_an(Array)
+  end
+
+  it "returns an array when asked for special tags" do
+    Taggart.special_tags.should be_an(Array)
+  end
+
+  it "returns an array when asked for single tags" do
+    Taggart.single_tags.should be_an(Array)
+  end
+
+end
 
 describe Taggart::String, "#attribute_tags" do
   
@@ -139,7 +163,7 @@ describe Taggart::Array, "#array_attribute_tag" do
   end
   
   
-  describe Taggart::String, "Special tags" do
+  describe Taggart::String, "Smart tags" do
     context "href tags" do
       it "renders a basic <a href>-tag." do 
         "/hello/world.html".href("Hello World").should == "<a href=\"/hello/world.html\">Hello World</a>"
