@@ -7,10 +7,96 @@
 #    Github: https://github.com/jocke/taggart
  
 module Taggart
+
+  VERSION = '0.0.7'
+  BUILD = '012'
+
+  def self.help
+    puts "Welcome to Taggart (#{VERSION} Build #{BUILD})"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Taggart is a library that allows you to easily"
+    puts "turn a string (or array) into an HTML tag or more tags"
+    puts "by simply calling the 'tag-method' on the string."
+    puts "Examples:"
+    puts "  'Hello World!'.h1  -->  <h1>Hello World!</h1>'"
+    puts "  'Important'.span(class: :important) --\> <span class=\"important\">Important</span>"
+    puts "  'Break'.br --> Break<br />"
+    puts "  %w(a b c).ul --> <ul><li>a</li><li>b</li><li>c</li></ul>"
+    puts "\nFor a list of tags run Taggart.tags"
+  end
+
+  def self.tags
+    puts "Taggart's tags:"
+    puts "~~~~~~~~~~~~~~~"
+    puts "This is a list of the tags that Taggart can generate, for your pleasure"
+    puts "\nStandard tags:"
+    puts "--------------"
+    puts "These tags have a start- and end-tag and the take any number of"
+    puts "attributes in the form of a hash with key-value pairs."
+    output_tags(Taggart::String::STANDARD_TAGS)
+    puts "\nSpecial tags:"
+    puts "-------------"
+    puts "These tags behave like the Standard tags, but there's already a"
+    puts "method defined for the String instance so these tags have to be"
+    puts "treated in a slightly special way, in that the tag that's ouputted"
+    puts "doesn't have the same method name. I.e to output <tr> you call '._tr'"
+    puts "however, you don't really need to bother with knowing this as Taggart"
+    puts "does some magic behind the scenes to determine wheter you are asking"
+    puts "for a Taggart tag or the original method."
+    Taggart::String::SPECIAL_TAGS.sort.each do |tag_pair|
+      puts "  Tag: <#{tag_pair[0].ljust(6)}>  Method: .#{tag_pair[1]}"
+    end
+    puts "\nSingle Tags"
+    puts "------------"
+    puts "Single tags are tags that do not an end tag, <br> is one such tag"
+    puts "In Taggart Single Tags behave just like Standard tags; you can"
+    puts "add attributes to them."
+    output_tags(Taggart::String::SINGLE_TAGS)
+    puts "\nTag arrays and methods"
+    puts "-----------------------"
+    puts "You can access the following arrays and methods containing the tags."
+    puts "Tags           Array                            Method"
+    puts "Standard tags  Taggart::String::STANDARD_TAGS   Taggart.standard_tags"
+    puts "Special tags   Taggart::String::SPECIAL_TAGS    Taggart.special_tags"
+    puts "Single tags    Taggart::String::SINGLE_TAGS     Taggart.single_tags"
+  end
+
+  def self.standard_tags
+    Taggart::String::STANDARD_TAGS
+  end
+  def self.special_tags
+    Taggart::String::SPECIAL_TAGS
+  end
+
+  def self.single_tags
+    Taggart::String::SINGLE_TAGS 
+  end
+
+  private
+
+  def self.output_tags(tags)
+    columns = 4
+    padding = 14
+    
+    print "  "
+    tags.sort.each_with_index do |tag, index| 
+      index += 1
+      print "#{tag.ljust(padding)}" 
+      print "\n  " if ((index % columns) == 0) and (index > 0)
+    end
+    puts "\n\n"
+  end
+
   module String
   
     DEBUG = false
-    
+    STANDARD_TAGS = %w{ h1 h2 h3 h4 h5 h6 a title html head table thead tfoot button fieldset form label 
+                        select legend option textarea body blockquote q tbody th td tfoot style div
+                        span abbr acronym address dd dl dt li ol caption ul em strong p tt pre sup del
+                        small cite code } # This is not a complete list - please tweet or pull req.
+    SPECIAL_TAGS  = [['tr', '_tr'], ['sub', '_sub']]
+    TAGS = STANDARD_TAGS + SPECIAL_TAGS
+    SINGLE_TAGS = %w{br hr input link meta}
 
     # Redefining <tr> to work with both translate-tr and tag-tr
     def dual_tr(*args)
@@ -60,11 +146,11 @@ module Taggart
         "<script#{option_str}>#{self}</script>"
       end
     end
-    
-  
+
+
     private 
-    
-  
+
+
     # Parses the options for the tags
     def parse_options(args)
       return "" if args.nil?
@@ -106,13 +192,7 @@ module Taggart
     end
   
   
-    standard_tags = %w{ h1 h2 h3 h4 h5 h6 a title html head table thead tfoot button fieldset form label 
-                        select legend option textarea body blockquote q tbody th td tfoot style div
-                        span abbr acronym address dd dl dt li ol caption ul em strong p tt pre sup del
-                        small cite code } # This is not a complete list - please tweet or pull req.
-    special_tags  = [['tr', '_tr'], ['sub', '_sub']]
-    tags = standard_tags + special_tags
-    tags.each do |tag|
+    TAGS.each do |tag|
       if tag.class.name == 'String'
         self.attribute_tag(tag)
       else
@@ -120,7 +200,8 @@ module Taggart
       end
     end
     
-    %w{br hr input link meta}.each do |tag|
+
+    SINGLE_TAGS.each do |tag|
       self.single_attribute_tag(tag)
     end
     
