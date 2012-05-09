@@ -134,8 +134,7 @@ console you can now run:
 
 ```ruby
    Taggart.help  # For generic information about Taggart (or Taggart.info)
-   Taggart.tags  # For a list of different tags and other curious
-things.
+   Taggart.tags  # For a list of different tags and other curious things.
 ```
 
 There's also some constants that you can access, such as `VERSION`, and
