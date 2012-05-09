@@ -59,23 +59,23 @@ end
 
 describe Taggart::Array, "#array_attribute_tag" do
   
-  it "returns a the array elements as tags without any attributes" do
+  it "returns the elements in the array wrapped with li-tags when calling .li method" do
     %w{one two three}.li.should == "<li>one</li><li>two</li><li>three</li>"
   end
   
-  it "returns a the array elements as tags with one attribute" do
+  it "returns the elements with an attribute wrapped in td when calling the td method on the array" do
     %w{one two three}.td(class: :programmers).should == "<td class=\"programmers\">one</td><td class=\"programmers\">two</td><td class=\"programmers\">three</td>"
   end
   
-  it "returns a the array elements as tags with two attribute" do
+  it "returns the array elements wrapped in td tags and two attributes when called with two attribute parameters" do
     %w{one two three}.td(class: :programmers, id: :unpossible).should == "<td class=\"programmers\" id=\"unpossible\">one</td><td class=\"programmers\" id=\"unpossible\">two</td><td class=\"programmers\" id=\"unpossible\">three</td>"
   end
   
-  it "returns a the array symbol elements as tags without attributes" do
+  it "returns the elements in the array wrapped with td when calling the td method" do
     [:one, :two, :three].td.should == "<td>one</td><td>two</td><td>three</td>"
   end
   
-  it "returns a the nested array elements as tags without attributes" do
+  it "renders a nested set of td-tags when the td method is called no a nested array" do
     [:one, [:nine, :eight, :seven], :two, :three].td.should == "<td>one</td><td><td>nine</td><td>eight</td><td>seven</td></td><td>two</td><td>three</td>"
   end
   

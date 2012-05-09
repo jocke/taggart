@@ -126,6 +126,21 @@ Naturally they all also work with attributes.
 See the `spec/taggart_spec.rb` for more examples (until I have time to do a bigger-better-faster-example file).
 
 
+Informational:
+--------------
+If you get lost in Taggart or if you're just curious about what Taggart
+can do, I've created a few informational things for you. In the IRB
+console you can now run:
+
+```ruby
+   Taggart.help  # For generic information about Taggart (or Taggart.info)
+   Taggart.tags  # For a list of different tags and other curious
+things.
+```
+
+There's also some constants that you can access, such as `VERSION`, and
+tags, see the aforementioned `Taggart.help` and `Taggart.tags`.
+
 Background:
 -----------
 I have a lot of Ruby code that marks some String in an HTML tag, usually with a 
@@ -164,6 +179,10 @@ Taggart is now active, which means you can play around.
 History
 -------
 
+- Added informational Taggart.help and Taggart.tags.
+- Moved several tags into arrays for easier reference.
+- Created Taggart::VERSION and Taggart::BUILD for reference and DRYness.
+- Changed some of the labels in the test file.
 - Added `<table>` to Array that creates single or multi row tables.
 - Added `<ol>` and `<ul>` tags to the Array so you can now generate lists in one fast action.
 - Added `<script>`-tag. You can now add `"my-script.js".script` and `"alert('Hello World!')".script`.
@@ -207,8 +226,8 @@ Feedback welcome!!
 
 Author: Jocke Selin <jocke@selincite.com> @jockeselin
 
-Date: 2012-03-14
+Date: 2012-05-09
 
-Version: 0.0.6 Build 011
+Version: 0.0.7 Build 012
 
 Github: <https://github.com/jocke/taggart>

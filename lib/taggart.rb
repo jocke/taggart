@@ -2,8 +2,8 @@
 # ===========================================
 #    Author: Jocke Selin <jocke@selincite.com>
 #            @jockeselin
-#      Date: 2012-03-14
-#   Version: 0.0.6 Build 011
+#      Date: 2012-05-09
+#   Version: 0.0.7 Build 012
 #    Github: https://github.com/jocke/taggart
  
 module Taggart
@@ -19,10 +19,24 @@ module Taggart
     puts "by simply calling the 'tag-method' on the string."
     puts "Examples:"
     puts "  'Hello World!'.h1  -->  <h1>Hello World!</h1>'"
-    puts "  'Important'.span(class: :important) --\> <span class=\"important\">Important</span>"
-    puts "  'Break'.br --> Break<br />"
-    puts "  %w(a b c).ul --> <ul><li>a</li><li>b</li><li>c</li></ul>"
+    puts "  'Important'.span(class: :important) " 
+    puts "                     --> <span class=\"important\">Important</span>"
+    puts "  'Break'.br         --> Break<br />"
+    puts "  %w(a b c).ul       --> <ul><li>a</li><li>b</li><li>c</li></ul>"
     puts "\nFor a list of tags run Taggart.tags"
+    puts "Other informational stuff:"
+    puts "  - Version:  Taggart::VERSION"
+    puts "  - Build:    Taggart::BUILD"
+    puts "\nPlease note that Taggart is considered 'experimental' (but"
+    puts "fairly stable) and in early development, so please help make"
+    puts "Taggart better; send suggestions, bug fixes, improvements, etc"
+    puts "to the author, and do fork the code and send pull requests if"
+    puts "you've made an improvement - Thanks!"
+    puts "\n\nAuthor: Jocke Selin <jocke@selincite.com> @jockeselin"
+  end
+
+  def self.info
+    self.help
   end
 
   def self.tags
@@ -34,8 +48,8 @@ module Taggart
     puts "These tags have a start- and end-tag and the take any number of"
     puts "attributes in the form of a hash with key-value pairs."
     output_tags(Taggart::String::STANDARD_TAGS)
-    puts "\nSpecial tags:"
-    puts "-------------"
+    puts "\nSpecial tags"
+    puts "------------"
     puts "These tags behave like the Standard tags, but there's already a"
     puts "method defined for the String instance so these tags have to be"
     puts "treated in a slightly special way, in that the tag that's ouputted"
@@ -47,20 +61,13 @@ module Taggart
       puts "  Tag: #{('<' + tag_pair[0] + '>').ljust(6)}  Method: .#{tag_pair[1]}"
     end
     puts "\nSingle Tags"
-    puts "------------"
+    puts "-------------"
     puts "Single tags are tags that do not an end tag, <br> is one such tag"
     puts "In Taggart Single Tags behave just like Standard tags; you can"
     puts "add attributes to them."
     output_tags(Taggart::String::SINGLE_TAGS)
-    puts "\nTag arrays and methods"
-    puts "-----------------------"
-    puts "You can access the following arrays and methods containing the tags."
-    puts "Tags           Array                            Method"
-    puts "Standard tags  Taggart::String::STANDARD_TAGS   Taggart.standard_tags"
-    puts "Special tags   Taggart::String::SPECIAL_TAGS    Taggart.special_tags"
-    puts "Single tags    Taggart::String::SINGLE_TAGS     Taggart.single_tags"
     puts "\nSmart Tags"
-    puts "-----------"
+    puts "------------"
     puts "These tags go to the gifted class and can speak elvish. They know what"
     puts "you want from them. They don't behave like the other ones in the sense"
     puts "that you have a string that you want to turn into something, not just a"
@@ -71,6 +78,36 @@ module Taggart
     puts "          content as a parameter, and also other attributes as 2nd argument."
     puts ".script - Either turns a URL to a script file into a <script src..></script>"
     puts "          tag, or embeds a script source in <script></script> tags. Smart!"
+    puts "\nArray tags"
+    puts "----------"
+    puts "The Array Tags generate HTML tags out of a list of strings in an array."
+    puts "For example, you can turn an array into list items by callin the .li-"
+    puts "method on the array."
+    puts "You can also pass attributes to the tags as with the Standard Tags"
+    puts "The tags are:"
+    puts "   td        li"
+    puts "\nSmart Array Tags"
+    puts "-----------------"
+    puts "The Smart Array Tags are all a bit more smartly dressed than the"
+    puts "proletarian Array Tags. Namely, they figure out what you do."
+    puts "Here's the honour roll"
+    puts "Method   Tag   Special powers"
+    puts ".ol    - Turns an array into an ordered list, wrapping the array elements"
+    puts "         in <li> tags so you get your awesome list in one go"
+    puts ".ul    - The almost identical twin of .ol"
+    puts ".tr    - Like .ol and .li, but wraps the array in <tr> tags with every"
+    puts "         element wrapped in a <td> tag."
+    puts ".table - The smartest of them all. Creates a complete table from a, one or"
+    puts "         two dimensional Array. Each array is wrapped in the <tr> tag with"
+    puts "         every element in the Array in <td> tags. It's all finished off"
+    puts "         with a decoration of <table>."
+    puts "\nTag arrays and methods"
+    puts "----------------------"
+    puts "You can access the following arrays and methods containing the tags."
+    puts "Tags           Array                            Method"
+    puts "Standard tags  Taggart::String::STANDARD_TAGS   Taggart.standard_tags"
+    puts "Special tags   Taggart::String::SPECIAL_TAGS    Taggart.special_tags"
+    puts "Single tags    Taggart::String::SINGLE_TAGS     Taggart.single_tags"
   end
 
 
