@@ -21,7 +21,7 @@ or try (in bad typographical taste)
 to get 
 
 ```html
-  <em><strong>Important!</em></strong>
+  <strong><em>Important!</em></strong>
 ```
 
 or do some more nesting 
