@@ -82,7 +82,7 @@ will return.
 ```html
   Gimme a<br />
 ```
-You can choose to close the tag with `Taggart.close_ending_tag` or open the tag (default as of 0.0.8) with `Taggart.open_ending_tag`.
+You can choose to close the tag with `Taggart.close_ending_tag` or keep the tag open (default as of 0.0.8) with `Taggart.open_ending_tag`.
 
 
 Also try some of the 'cleverness', for example calling `.script` on a `.js` file will yield a different result compared to running it on a Javascript. 
