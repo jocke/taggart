@@ -1,5 +1,5 @@
-Taggart allows you to tag Strings with HTML
-===========================================
+Taggart surrounds your strings with HTML Tags
+=============================================
 How and what
 ------------
 ```ruby
@@ -82,6 +82,8 @@ will return.
 ```html
   Gimme a<br />
 ```
+You can choose to close the tag with `Taggart.close_ending_tag` or open the tag (default as of 0.0.8) with `Taggart.open_ending_tag`.
+
 
 Also try some of the 'cleverness', for example calling `.script` on a `.js` file will yield a different result compared to running it on a Javascript. 
 Like this:
@@ -134,7 +136,7 @@ console you can now run:
 
 ```ruby
    Taggart.help  # For generic information about Taggart (or Taggart.info)
-   Taggart.tags  # For a list of different tags and other curious things.
+   puts Taggart.tags  # For a list of different tags and other curious things.
 ```
 
 There's also some constants that you can access, such as `VERSION`, and
@@ -178,6 +180,11 @@ Taggart is now active, which means you can play around.
 History
 -------
 
+- Added HTML5 tags - the list is not complete, let me know what I've
+  missed.
+- Added ability to have closed and open endings on single tags (i.e `<br>`
+  and `<br />`.
+- Moved help to a separate module.
 - Added informational Taggart.help and Taggart.tags.
 - Moved several tags into arrays for easier reference.
 - Created Taggart::VERSION and Taggart::BUILD for reference and DRYness.
@@ -210,7 +217,6 @@ Future???
 With your blessing. Like Ozzy said; _"The crazier you get, the crazier Ozzy gets!"_, or something.
 
 * Potential validations, could check file, size, etc
-* Switch between HTML and XHTML.
 * Full fledged examples.
 * Please send suggestions.
 
@@ -225,8 +231,8 @@ Feedback welcome!!
 
 Author: Jocke Selin <jocke@selincite.com> @jockeselin
 
-Date: 2012-05-09
+Date: 2012-10-10
 
-Version: 0.0.7 Build 012
+Version: 0.0.8 Build 013
 
 Github: <https://github.com/jocke/taggart>

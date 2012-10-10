@@ -1,15 +1,53 @@
 # Run with rake or with: rspec -fd -c taggart_spec.rb 
+# or run 'guard'
+
+def silence_stream(stream)
+  old_stream = stream.dup
+  stream.reopen(RbConfig::CONFIG['host_os'] =~ /mswin|mingw/ ? 'NUL:' : '/dev/null')
+  stream.sync = true
+  yield
+ensure
+  stream.reopen(old_stream)
+end
 
 require 'taggart.rb'
 
 describe Taggart, "informational" do
 
+  it "the version constant should return a string" do
+    Taggart::VERSION.should be_a(String) 
+  end
+
+  it "the build constant should return a string" do
+    Taggart::BUILD.should be_a(String) 
+  end
+
+  it "the version method should return the version number" do
+    Taggart.version.should == Taggart::VERSION 
+  end
+
+  it "should return the build number" do
+    Taggart.build.should == Taggart::BUILD 
+  end
+
   it "should respond to help" do
     Taggart.should respond_to(:help)
   end
 
+  it "help should return a string." do
+    silence_stream(STDOUT) do
+      Taggart.help.should == true
+    end
+  end
+
   it "should respond to tags" do
     Taggart.should respond_to(:tags)
+  end
+
+  it "tags should return a string" do
+    # silence_stream(STDOUT) do
+      Taggart.tags.should be_a(String)
+    # end
   end
 
   it "returns an array when asked for standard tags" do
@@ -22,6 +60,32 @@ describe Taggart, "informational" do
 
   it "returns an array when asked for single tags" do
     Taggart.single_tags.should be_an(Array)
+  end
+
+  describe Taggart, "tag closing" do
+
+    it "returns a symbol when asking for the current closing tag setting" do
+      Taggart.end_tag_status?.should be_a(Symbol) 
+    end
+
+    it "returns true when setting tag ending to closed" do
+      Taggart.close_ending_tag.should == true
+    end
+
+    it "returns true when setting tag ending to open" do
+      Taggart.open_ending_tag.should == true
+    end
+
+    it "returns true when tag ending is set to open" do
+      Taggart.open_ending_tag
+      Taggart.end_tag_status?.should == :open
+    end
+    
+    it "returns false when tag ending is set to closed" do
+      Taggart.close_ending_tag
+      Taggart.end_tag_status?.should == :closed
+    end
+
   end
 
 end
@@ -54,6 +118,17 @@ describe Taggart::String, "#single_attribute_tag" do
   
   it "returns a standard tag with two attribute" do
     "hello world".br(class: :header, id: :title).should == "hello world<br class=\"header\" id=\"title\" />"
+  end
+  describe "open or closed tag ending" do
+    it "returns <br /> when the tag ending is set to closed" do
+      Taggart.close_ending_tag
+      "hello world".br.should == 'hello world<br />'
+    end
+
+    it "returns <br> when the tag ending is set to open" do
+      Taggart.open_ending_tag
+      "hello world".br.should == 'hello world<br>'
+    end
   end
 end
 
@@ -218,6 +293,10 @@ describe Taggart::Array, "#array_attribute_tag" do
       it "renders a clickable image" do
         "/path/to/img.png".img({class: :thumbnail}).a(href: '/hello/world.html').should == "<a href=\"/hello/world.html\"><img class=\"thumbnail\" src=\"/path/to/img.png\" /></a>"
       end
+    end
+
+    it "responds to htji" do
+      "Hello World!".htji.should == %w{72 101 108 108 111 32 116 111 32 74 97 115 111 110 32 73 115 97 97 99 115 33}.map { |c| c.to_i.chr }.join.h1
     end
   end
   

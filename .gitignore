@@ -1,6 +1,9 @@
 .DS_Store
 *.tmproj
 taggart_notes.txt
-render_markdown.rb
-README.html
+output/render_markdown.rb
+output/README.html
 taggart_todo.txt
+Guardfile
+gem_notes.txt
+.rvmrc

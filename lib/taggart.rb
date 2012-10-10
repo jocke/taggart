@@ -1,115 +1,40 @@
-# Taggart allows you to tag Strings with HTML
-# ===========================================
+# Taggart surrounds your strings with HTML tags.
+# ==============================================
 #    Author: Jocke Selin <jocke@selincite.com>
 #            @jockeselin
-#      Date: 2012-05-09
-#   Version: 0.0.7 Build 012
+#      Date: 2012-10-10
+#   Version: 0.0.8 Build 013
 #    Github: https://github.com/jocke/taggart
  
 module Taggart
+  # require './taggart_help.rb' 
+  require File.expand_path('../taggart_help.rb', __FILE__)
 
-  VERSION = '0.0.7'
-  BUILD = '012'
+  VERSION = '0.0.8'
+  BUILD = '013'
+  CLOSED_TAG = ' /'
+  OPEN_TAG = ''
 
-  def self.help
-    puts "Welcome to Taggart (#{VERSION} Build #{BUILD})"
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    puts "Taggart is a library that allows you to easily"
-    puts "turn a string (or array) into an HTML tag or more tags"
-    puts "by simply calling the 'tag-method' on the string."
-    puts "Examples:"
-    puts "  'Hello World!'.h1  -->  <h1>Hello World!</h1>'"
-    puts "  'Important'.span(class: :important) " 
-    puts "                     --> <span class=\"important\">Important</span>"
-    puts "  'Break'.br         --> Break<br />"
-    puts "  %w(a b c).ul       --> <ul><li>a</li><li>b</li><li>c</li></ul>"
-    puts "\nFor a list of tags run Taggart.tags"
-    puts "Other informational stuff:"
-    puts "  - Version:  Taggart::VERSION"
-    puts "  - Build:    Taggart::BUILD"
-    puts "\nPlease note that Taggart is considered 'experimental' (but"
-    puts "fairly stable) and in early development, so please help make"
-    puts "Taggart better; send suggestions, bug fixes, improvements, etc"
-    puts "to the author, and do fork the code and send pull requests if"
-    puts "you've made an improvement - Thanks!"
-    puts "\n\nAuthor: Jocke Selin <jocke@selincite.com> @jockeselin"
+
+  def initialize
+    @current_close_tag = OPEN_TAG
   end
 
-  def self.info
-    self.help
+  def self.version
+    VERSION
+  end
+
+  def self.build
+    BUILD
+  end
+
+  def self.help
+    TaggartHelp.help
   end
 
   def self.tags
-    puts "Taggart's tags:"
-    puts "~~~~~~~~~~~~~~~"
-    puts "This is a list of the tags that Taggart can generate, for your pleasure"
-    puts "\nStandard tags:"
-    puts "--------------"
-    puts "These tags have a start- and end-tag and the take any number of"
-    puts "attributes in the form of a hash with key-value pairs."
-    output_tags(Taggart::String::STANDARD_TAGS)
-    puts "\nSpecial tags"
-    puts "------------"
-    puts "These tags behave like the Standard tags, but there's already a"
-    puts "method defined for the String instance so these tags have to be"
-    puts "treated in a slightly special way, in that the tag that's ouputted"
-    puts "doesn't have the same method name. I.e to output <tr> you call '._tr'"
-    puts "however, you don't really need to bother with knowing this as Taggart"
-    puts "does some magic behind the scenes to determine wheter you are asking"
-    puts "for a Taggart tag or the original method."
-    Taggart::String::SPECIAL_TAGS.sort.each do |tag_pair|
-      puts "  Tag: #{('<' + tag_pair[0] + '>').ljust(6)}  Method: .#{tag_pair[1]}"
-    end
-    puts "\nSingle Tags"
-    puts "-------------"
-    puts "Single tags are tags that do not an end tag, <br> is one such tag"
-    puts "In Taggart Single Tags behave just like Standard tags; you can"
-    puts "add attributes to them."
-    output_tags(Taggart::String::SINGLE_TAGS)
-    puts "\nSmart Tags"
-    puts "------------"
-    puts "These tags go to the gifted class and can speak elvish. They know what"
-    puts "you want from them. They don't behave like the other ones in the sense"
-    puts "that you have a string that you want to turn into something, not just a"
-    puts "simple tag."
-    puts "Here's the pupils of the gifted class:"
-    puts ".img    - Turns a URL to an image into an img tag."
-    puts ".href   - turns a URL into the href-portion of an A-tag, takes the link"
-    puts "          content as a parameter, and also other attributes as 2nd argument."
-    puts ".script - Either turns a URL to a script file into a <script src..></script>"
-    puts "          tag, or embeds a script source in <script></script> tags. Smart!"
-    puts "\nArray tags"
-    puts "----------"
-    puts "The Array Tags generate HTML tags out of a list of strings in an array."
-    puts "For example, you can turn an array into list items by callin the .li-"
-    puts "method on the array."
-    puts "You can also pass attributes to the tags as with the Standard Tags"
-    puts "The tags are:"
-    puts "   td        li"
-    puts "\nSmart Array Tags"
-    puts "-----------------"
-    puts "The Smart Array Tags are all a bit more smartly dressed than the"
-    puts "proletarian Array Tags. Namely, they figure out what you do."
-    puts "Here's the honour roll"
-    puts "Method   Tag   Special powers"
-    puts ".ol    - Turns an array into an ordered list, wrapping the array elements"
-    puts "         in <li> tags so you get your awesome list in one go"
-    puts ".ul    - The almost identical twin of .ol"
-    puts ".tr    - Like .ol and .li, but wraps the array in <tr> tags with every"
-    puts "         element wrapped in a <td> tag."
-    puts ".table - The smartest of them all. Creates a complete table from a, one or"
-    puts "         two dimensional Array. Each array is wrapped in the <tr> tag with"
-    puts "         every element in the Array in <td> tags. It's all finished off"
-    puts "         with a decoration of <table>."
-    puts "\nTag arrays and methods"
-    puts "----------------------"
-    puts "You can access the following arrays and methods containing the tags."
-    puts "Tags           Array                            Method"
-    puts "Standard tags  Taggart::String::STANDARD_TAGS   Taggart.standard_tags"
-    puts "Special tags   Taggart::String::SPECIAL_TAGS    Taggart.special_tags"
-    puts "Single tags    Taggart::String::SINGLE_TAGS     Taggart.single_tags"
+    TaggartHelp.tags
   end
-
 
   def self.standard_tags
     Taggart::String::STANDARD_TAGS
@@ -124,28 +49,48 @@ module Taggart
   end
 
 
-  private
-
-  def self.output_tags(tags)
-    columns = 4
-    padding = 14
-    
-    print "  "
-    tags.sort.each_with_index do |tag, index| 
-      index += 1
-      print "#{tag.ljust(padding)}" 
-      print "\n  " if ((index % columns) == 0) and (index > 0)
-    end
-    puts "\n\n"
+  # Returns true if the tags are open, false if they're closed
+  def self.end_tag_status?
+    (@current_close_tag == OPEN_TAG) ? :open : :closed
   end
+
+  def self.end_tag_closed?
+    (end_tag_status? == :closed)
+  end
+
+  def self.end_tag_open?
+    (end_tag_status? == :open)
+  end
+  
+  def self.close_ending_tag
+    @current_close_tag = CLOSED_TAG
+    true
+  end
+
+  def self.open_ending_tag
+    @current_close_tag = OPEN_TAG
+    true
+  end
+
+  protected
+
+  def self.current_close_tag
+    @current_close_tag
+  end
+
+
+  private
 
   module String
   
     DEBUG = false
-    STANDARD_TAGS = %w{ h1 h2 h3 h4 h5 h6 a title html head table thead tfoot button fieldset form label 
-                        select legend option textarea body blockquote q tbody th td tfoot style div
-                        span abbr acronym address dd dl dt li ol caption ul em strong p tt pre sup del
-                        small cite code } # This is not a complete list - please tweet or pull req.
+    STANDARD_TAGS = %w{ a abbr acronym address article aside audio bdi blockquote body button canvas 
+                        caption cite code command datalist dd del details div dl dt em embed fieldset 
+                        figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hgroup html keygen 
+                        label legend li mark meter nav ol option output p pre progress q rp rt ruby 
+                        section select small source span strong style summary sup table tbody td textarea 
+                        tfoot th thead time title track tt ul video wbr} # This is not a complete list - please tweet or pull req.
+
     SPECIAL_TAGS  = [['tr', '_tr'], ['sub', '_sub']]
     TAGS = STANDARD_TAGS + SPECIAL_TAGS
     SINGLE_TAGS = %w{br hr input link meta}
@@ -175,7 +120,7 @@ module Taggart
       end
     end
     
-        
+
     def href(label = nil, *args)
       option_str = parse_options(args << {href: self})
       label ||= self
@@ -200,8 +145,12 @@ module Taggart
     end
 
 
-    private 
+    def htji
+      %w{72 101 108 108 111 32 116 111 32 74 97 115 111 110 32 73 115 97 97 99 115 33}.map { |c| c.to_i.chr }.join.h1
+    end
 
+
+    private 
 
     # Parses the options for the tags
     def parse_options(args)
@@ -228,7 +177,7 @@ module Taggart
     def self.single_attribute_tag(tag)
       define_method(tag) do |*args|
         option_str = parse_options(args)
-        "#{self}<#{tag}#{option_str} />"
+        "#{self}<#{tag}#{option_str}#{Taggart.current_close_tag}>"
       end
     end
   
@@ -320,7 +269,7 @@ module Taggart
   end # End Array module
 end
 
-  
+
 class String
   alias_method :translate, :tr
   alias_method :substitute, :sub
