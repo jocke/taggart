@@ -3,7 +3,8 @@ Taggart surrounds your strings with HTML Tags
 How and what
 ------------
 ```ruby
-  "Hello World!".h1
+  include Taggart::API
+  taggart("Hello World!").h1.to_s
 ```
 
 returns
@@ -15,7 +16,7 @@ returns
 or try (in bad typographical taste) 
 
 ```ruby
-  "Important!".em.strong
+  taggart("Important!").em.strong.to_s
 ```
 
 to get 
@@ -27,7 +28,7 @@ to get
 or do some more nesting 
 
 ```ruby
-  ("Label".td + "Value".td).tr.table
+  (taggart("Label").td + taggart("Value").td).tr.table.to_s
 ```
 
 to render a small table
@@ -39,7 +40,7 @@ to render a small table
 Add HTML attributes as Ruby parameters.
 
 ```ruby
-  "hello".span(class: 'stuff', id: 'thing')
+  taggart("hello").span(class: 'stuff', id: 'thing').to_s
 ```
 
 to get a nice HTML string like this
@@ -51,7 +52,7 @@ to get a nice HTML string like this
 You can also use arrays, how about this table?
 
 ```ruby
-  (%w(r1c1 r1c2 r1c3).td.tr + %w(r2c1 r2c2 r2c3).td.tr).table
+  (taggart(%w(r1c1 r1c2 r1c3)).td.tr + taggart(%w(r2c1 r2c2 r2c3)).td.tr).table.to_s
 ```
 
 will produce this HTML (author's line breaks and indentation)
@@ -74,7 +75,7 @@ will produce this HTML (author's line breaks and indentation)
 Naturally we can do single tags too.
 
 ```ruby
-  "Gimme a".br
+  taggart("Gimme a").br.to_s
 ```
 
 will return.
@@ -89,7 +90,7 @@ Also try some of the 'cleverness', for example calling `.script` on a `.js` file
 Like this:
 
 ```ruby
-  "alert('This string will pop up an alert!')".script
+  taggart("alert('This string will pop up an alert!')").script.to_s
 ```
 
 gives you
@@ -101,7 +102,7 @@ gives you
 whereas this string
 
 ```ruby
-  "/script/awesome_script.js".script
+  taggart("/script/awesome_script.js").script.to_s
 ```
 
 gives you this
@@ -113,7 +114,7 @@ gives you this
 Calling `.ol` or `.ul` on an array, will generate a full ordered or unordered list, like this
 
 ```ruby
-  %w(First Second Third).ol
+  taggart(%w(First Second Third)).ol
 ```
 
 returns
@@ -150,7 +151,7 @@ It's not particularly nice to write `"<strong>#{my_variable}</strong>"`. The mor
 complex the Ruby code is, the worse it is to have `"`, `#`, `{` or `}` soiling the code.
 I was looking at the code and I thought, wouldn't it be nice if I could just tell that piece
 of String that it's supposed to be a `<span>` or some other tag. One could simply 
-write `my_variable.strong` to get the job done. **Taggart** was born.
+write `taggart(my_variable).strong.to_s` to get the job done. **Taggart** was born.
 
 The Idea
 --------

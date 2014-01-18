@@ -15,6 +15,18 @@ module Taggart
   CLOSED_TAG = ' /'
   OPEN_TAG = ''
 
+  module API
+    def taggart(object)
+      case object
+      when ::String
+        Taggart::String.new(object)
+      when ::Array
+        Taggart::Array.new(object)
+      else
+        raise "Taggart: #{object.class} not supported"
+      end
+    end
+  end
 
   def initialize
     @current_close_tag = OPEN_TAG
@@ -38,10 +50,6 @@ module Taggart
 
   def self.standard_tags
     Taggart::String::STANDARD_TAGS
-  end
-
-  def self.special_tags
-    Taggart::String::SPECIAL_TAGS
   end
 
   def self.single_tags
@@ -81,72 +89,58 @@ module Taggart
 
   private
 
-  module String
+  class String
+    include API
   
     DEBUG = false
     STANDARD_TAGS = %w{ a abbr acronym address article aside audio bdi blockquote body button canvas 
                         caption cite code command datalist dd del details div dl dt em embed fieldset 
                         figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hgroup html keygen 
                         label legend li mark meter nav ol option output p pre progress q rp rt ruby 
-                        section select small source span strong style summary sup table tbody td textarea 
-                        tfoot th thead time title track tt ul video wbr} # This is not a complete list - please tweet or pull req.
+                        section select small source span strong style sub summary sup table tbody td textarea 
+                        tfoot th thead time title tr track tt ul video wbr} # This is not a complete list - please tweet or pull req.
 
-    SPECIAL_TAGS  = [['tr', '_tr'], ['sub', '_sub']]
-    TAGS = STANDARD_TAGS + SPECIAL_TAGS
+    TAGS = STANDARD_TAGS
     SINGLE_TAGS = %w{br hr input link meta}
 
-    # Redefining <tr> to work with both translate-tr and tag-tr
-    def dual_tr(*args)
-      if ((args.size == 2) && (args[0].is_a? String) && (args[1].is_a? String))
-        self.translate(args[0], args[1])
-      else
-        self._tr(args.first)
-      end
+    def initialize(string)
+      @string = string
     end
-
-
-    # Redefining <sub> to work with both substitute-sub and tag-sub
-    def dual_sub(*args, &block)
-      if (args[0].is_a? Hash)
-        self._sub(args.first)
-      elsif args.empty?
-        self._sub
-      else
-        if block_given?
-          self.substitute(args[0]) { |*args| block.call(*args) }
-        else
-          self.substitute(args[0], args[1])
-        end
-      end
-    end
-    
 
     def href(label = nil, *args)
-      option_str = parse_options(args << {href: self})
-      label ||= self
-      "<a#{option_str}>#{label}</a>"
+      option_str = parse_options(args << {href: @string})
+      label ||= @string
+      taggart("<a#{option_str}>#{label}</a>")
     end
     
     
     def img(*args)
-      option_str = parse_options(args << {src: self})
-      "<img#{option_str} />"
+      option_str = parse_options(args << {src: @string})
+      taggart("<img#{option_str} />")
     end
     
     
     def script(*args)
-      if self[-3, 3] == '.js' # We've got a Jabbarscript file (could/should cater for all script types. VBScript, heheeh!)
-        option_str = parse_options(args << {type: "text/javascript", src: self})
-        "<script#{option_str}></script>"
+      if @string[-3, 3] == '.js' # We've got a Jabbarscript file (could/should cater for all script types. VBScript, heheeh!)
+        option_str = parse_options(args << {type: "text/javascript", src: @string})
+        taggart("<script#{option_str}></script>")
       else
         option_str = parse_options(args << {type: "text/javascript"})
-        "<script#{option_str}>#{self}</script>"
+        taggart("<script#{option_str}>#{@string}</script>")
       end
     end
 
 
     def htji
-      %w{72 101 108 108 111 32 116 111 32 74 97 115 111 110 32 73 115 97 97 99 115 33}.map { |c| c.to_i.chr }.join.h1
+      taggart(%w{72 101 108 108 111 32 116 111 32 74 97 115 111 110 32 73 115 97 97 99 115 33}.map { |c| c.to_i.chr }.join).h1
+    end
+
+    def +(other)
+      taggart(self.to_s + other.to_s)
+    end
+
+    def to_s
+      @string
     end
 
 
@@ -177,7 +171,7 @@ module Taggart
     def self.single_attribute_tag(tag)
       define_method(tag) do |*args|
         option_str = parse_options(args)
-        "#{self}<#{tag}#{option_str}#{Taggart.current_close_tag}>"
+        taggart("#{@string}<#{tag}#{option_str}#{Taggart.current_close_tag}>")
       end
     end
   
@@ -188,7 +182,7 @@ module Taggart
       puts "Defining tag '#{(tag + "',").ljust(12)} with method name: '#{tag_name}'" if DEBUG
       define_method(tag_name) do |*args|
         option_str = parse_options(args)
-        "<#{tag}#{option_str}>#{self}</#{tag}>"
+        taggart("<#{tag}#{option_str}>#{@string}</#{tag}>")
       end
     end
   
@@ -209,11 +203,15 @@ module Taggart
   end # End String module
   
   
-  module Array
+  class Array
+    include API
     
     DEBUG = false
-    
-    
+
+    def initialize(array)
+      @array = array
+    end
+
     # Defines a standard tag that can create attributes
     def self.array_attribute_tag(tag, tag_name = nil)
       tag_name ||= tag
@@ -221,16 +219,16 @@ module Taggart
       define_method(tag_name) do |*args|
         args = args.first if args # Only using the first of the array
         result = []
-        self.each do |object|
-          if object.is_a? String
-            result << object.send(tag_name.to_sym, args)
-          elsif object.is_a? Symbol
-            result << object.to_s.send(tag_name.to_sym, args)
-          elsif object.is_a? Array # I don't know why you'd want to do this, but here it is.
-            result << (object.send(tag_name.to_sym, args)).send(tag_name.to_sym, args)
+        @array.each do |object|
+          if object.is_a? ::String
+            result << taggart(object).send(tag_name.to_sym, args)
+          elsif object.is_a? ::Symbol
+            result << taggart(object.to_s).send(tag_name.to_sym, args)
+          elsif object.is_a? ::Array # I don't know why you'd want to do this, but here it is.
+            result << taggart(object).send(tag_name.to_sym, args).send(tag_name.to_sym, args)
           end
         end
-        result.join
+        taggart(result.join)
       end
     end
     
@@ -242,49 +240,29 @@ module Taggart
     
     
     def ol(*args)
-      self.li.ol(*args)
+      taggart(@array).li.ol(*args)
     end
     
     
     def ul(*args)
-      self.li.ul(*args)
+      taggart(@array).li.ul(*args)
     end
     
     
     def tr(*args)
-      self.td.tr(*args)
+      taggart(@array).td.tr(*args)
     end
     
     
     def table(*args)
-      if self.first.is_a? Array
-        self.map do |table_row|
-          table_row.tr if table_row.is_a? Array
-        end.join.table(*args)
+      if @array.first.is_a? ::Array
+        taggart(@array.map do |table_row|
+          taggart(table_row).tr if table_row.is_a? ::Array
+        end.join).table(*args)
       else
-        self.tr.table(*args)
+        taggart(@array).tr.table(*args)
       end
     end
     
   end # End Array module
-end
-
-
-class String
-  alias_method :translate, :tr
-  alias_method :substitute, :sub
-  include Taggart::String
-
-  def tr(*args) 
-    dual_tr(*args)
-  end
-  
-  def sub(*args, &block) 
-    dual_sub(*args, &block)
-  end
-end
-
-
-class Array
-  include Taggart::Array
 end

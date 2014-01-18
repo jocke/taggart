@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.files         = ["lib/taggart.rb", "lib/taggart_help.rb", "Rakefile", "taggart.gemspec", "README.markdown"]
   s.test_files    = ["spec/lib/taggart_spec.rb"]
-  s.add_development_dependency ["rake", "rspec", "guard", "guard-rspec", "rb-fsevent"] # rb-fsevent is only required on MacOS.
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rspec"
   s.post_install_message = "Thanks for showing interest in Taggart! Please provide feedback to jocke@selincite.com!"
 end

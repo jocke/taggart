@@ -40,18 +40,6 @@ module TaggartHelp
     "These tags have a start- and end-tag and the take any number of\n" +
     "attributes in the form of a hash with key-value pairs.\n" +
     output_tags(Taggart::String::STANDARD_TAGS) +
-    "\nSpecial tags\n" +
-    "------------\n" +
-    "These tags behave like the Standard tags, but there's already a\n" +
-    "method defined for the String instance so these tags have to be\n" +
-    "treated in a slightly special way, in that the tag that's ouputted\n" +
-    "doesn't have the same method name. I.e to output <tr> you call '._tr'\n" +
-    "however, you don't really need to bother with knowing this as Taggart\n" +
-    "does some magic behind the scenes to determine wheter you are asking\n" +
-    "for a Taggart tag or the original method.\n" +
-    (Taggart::String::SPECIAL_TAGS.sort.map do |tag_pair|
-      "  Tag: #{('<' + tag_pair[0] + '>').ljust(6)}  Method: .#{tag_pair[1]}"
-    end).join("\n") +
     "\n\nSingle Tags\n" +
     "-------------\n" +
     "Single tags are tags that do not an end tag, <br> is one such tag\n" +
@@ -98,7 +86,6 @@ module TaggartHelp
     "You can access the following arrays and methods containing the tags.\n" +
     "Tags           Array                            Method\n" +
     "Standard tags  Taggart::String::STANDARD_TAGS   Taggart.standard_tags\n" +
-    "Special tags   Taggart::String::SPECIAL_TAGS    Taggart.special_tags\n" +
     "Single tags    Taggart::String::SINGLE_TAGS     Taggart.single_tags"
   end
 
