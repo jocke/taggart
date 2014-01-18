@@ -54,10 +54,6 @@ describe Taggart, "informational" do
     Taggart.standard_tags.should be_an(Array)
   end
 
-  it "returns an array when asked for special tags" do
-    Taggart.special_tags.should be_an(Array)
-  end
-
   it "returns an array when asked for single tags" do
     Taggart.single_tags.should be_an(Array)
   end

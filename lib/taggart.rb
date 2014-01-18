@@ -52,10 +52,6 @@ module Taggart
     Taggart::String::STANDARD_TAGS
   end
 
-  def self.special_tags
-    Taggart::String::SPECIAL_TAGS
-  end
-
   def self.single_tags
     Taggart::String::SINGLE_TAGS 
   end
@@ -104,8 +100,7 @@ module Taggart
                         section select small source span strong style sub summary sup table tbody td textarea 
                         tfoot th thead time title tr track tt ul video wbr} # This is not a complete list - please tweet or pull req.
 
-    SPECIAL_TAGS  = []
-    TAGS = STANDARD_TAGS + SPECIAL_TAGS
+    TAGS = STANDARD_TAGS
     SINGLE_TAGS = %w{br hr input link meta}
 
     def initialize(string)
