@@ -204,7 +204,7 @@ describe Taggart::Array, "#array_attribute_tag" do
     end
     
     it "executes substitute-sub when the fourth example, with a regexp, from the documentation is passed in" do
-      'Is SHELL your preferred shell?'.sub(/[[:upper:]]{2,}/, ENV).should == "Is /bin/bash your preferred shell?"
+      'Is SHELL your preferred shell?'.sub(/[[:upper:]]{2,}/, { 'SHELL' => '/bin/bash' }).should == "Is /bin/bash your preferred shell?"
     end
     
     it "executes substitute-sub when the fifth example, with a regexp, from the documentation is passed in" do
